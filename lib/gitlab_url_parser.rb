@@ -15,6 +15,6 @@ class GitlabURLParser < URLParser
   end
 
   def remove_domain
-    url.gsub!(/(gitlab.com)+?(:|\/)?/i, '')
+    url.gsub!(/(gitlab\.com)+?(:|\/)?/i, '')
   end
 end
