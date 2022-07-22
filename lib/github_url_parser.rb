@@ -15,6 +15,6 @@ class GithubURLParser < URLParser
   end
 
   def remove_domain
-    url.gsub!(/(github\.io|github\.com|github\.org|raw.githubusercontent.com)+?(:|\/)?/i, '')
+    url.gsub!(/(github\.io|github\.com|github\.org|raw\.githubusercontent\.com)+?(:|\/)?/i, '')
   end
 end
