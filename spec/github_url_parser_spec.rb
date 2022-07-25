@@ -58,6 +58,9 @@ describe GithubURLParser do
       ['github.com/1995hnagamin/hubot-achievements', '1995hnagamin/hubot-achievements'],
       ['git//github.com/divyavanmahajan/jsforce_downloader.git', 'divyavanmahajan/jsforce_downloader'],
       ['scm:git:https://michaelkrog@github.com/michaelkrog/filter4j.git', 'michaelkrog/filter4j'],
+      ['github.com/github/combobox-nav', 'github/combobox-nav'],
+      ['github.com/hhao785/github.com', 'hhao785/github.com'],
+      ['github.com/contrived_example/githubcom', 'contrived_example/githubcom']
     ].each do |row|
       url, full_name = row
       result = GithubURLParser.parse(url)
