@@ -15,6 +15,8 @@ class GithubURLParser < URLParser
   end
 
   def remove_domain
-    url.gsub!(/(github\.io|github\.com|github\.org|raw\.githubusercontent\.com)+?(:|\/)?/i, '')
+    # find the matches for any github domain characters in the url string
+    # and replace only the first match incase we find a repo with something like github.com as the name
+    url.sub!(/(github\.io|github\.com|github\.org|raw\.githubusercontent\.com)+?(:|\/)?/i, '')
   end
 end
