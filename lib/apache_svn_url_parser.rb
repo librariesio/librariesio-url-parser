@@ -26,8 +26,6 @@ class ApacheSvnUrlParser < URLParser
   end
 
   def extractable_early?
-    # I'm not really sure what that method is looking for but it doesn't work well with
-    # Apache SVN links right now
     false
   end
 
@@ -39,6 +37,9 @@ class ApacheSvnUrlParser < URLParser
     # this parser is parsing SVN projects, so any common folders used for branching should trip this
     # truncate the array of segments to stop once we hit a top level sub directory typically seen in SVN repos
     # and return everything up to that point
+    #
+    # for example apache.org/viewvnc/myproject/subproject/tags/my-1.0.0-release should stop at myproject/subproject
+    # since the tags are just part of that repository
     subdir_names = %w[trunk tags branches]
     subdir_index = url.index{ |s| subdir_names.include?(s) }
 
