@@ -30,12 +30,13 @@ class URLParser
   def self.try_all(url)
     GithubURLParser.parse_to_full_url(url) ||
     GitlabURLParser.parse_to_full_url(url) ||
-    BitbucketURLParser.parse_to_full_url(url)
+    BitbucketURLParser.parse_to_full_url(url) ||
+    ApacheSvnUrlParser.parse_to_full_url(url)
   end
 
   def parse_to_full_url
     path = parse
-    return nil unless path.present?
+    return nil if path.nil? || path.empty?
     [full_domain, path].join('/')
   end
 
@@ -151,11 +152,11 @@ class URLParser
   end
 
   def remove_scheme
-    url.gsub!(/(((git\+https|git|ssh|hg|svn|scm|http|https)+?:)+?)/i, '')
+    url.gsub!(/(((git\+https|git|ssh|hg|svn|scm|http|https)+?:)(\/\/)?)/i, '')
   end
 
   def remove_subdomain
-    url.gsub!(/(www|ssh|raw|git|wiki)+?\./i, '')
+    url.gsub!(/(www|ssh|raw|git|wiki|svn)+?\./i, '')
   end
 
   def remove_whitespace

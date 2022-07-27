@@ -45,6 +45,7 @@ URLParser.try_all("git@bitbucket.org:tildeslash/monit.git") #=> "https://bitbuck
 - GitHub
 - GitLab
 - Bitbucket
+- Apache SVN
 
 ## Development
 
