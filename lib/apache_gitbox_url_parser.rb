@@ -15,6 +15,8 @@ class ApacheGitboxUrlParser < URLParser
   end
 
   def remove_querystring
+    # it is common for the name to be passed in as a query parameter so we need to keep them in
+    # the url string for now and process them in later steps to pull the name out of the parameter
     url
   end
 
@@ -34,23 +36,24 @@ class ApacheGitboxUrlParser < URLParser
   end
 
   def domain_regex
-    # match only the viewvc endpoint at the domain
-    "#{domain.split("/").first}\.(#{tlds.join('|')})\/repos"
+    # match only the repos/asf endpoint at the domain
+    "#{domain.split("/").first}\.(#{tlds.join('|')})\/repos/asf"
   end
 
   def remove_domain
-    # find the matches for any github domain characters in the url string
-    # and replace only the first match incase we find a repo with something like github.com as the name
     url.sub!(/(gitbox\.apache\.org\/(repos\/asf))+?(:|\/)?/i, '')
   end
 
   def remove_extra_segments
+    # by the time the URL gets here it should have been mostly pared down to the correct name
+    # however if the name was passed as a query parameter the ?p= is still at the front of the name
     if url.is_a?(String) && url.start_with?("?p=")
       self.url = url.split("=").last
     end
   end
 
   def format_url
+    # ignore something if it comes in at as an Array at this point
     url.is_a?(String) ? url : nil
   end
 end

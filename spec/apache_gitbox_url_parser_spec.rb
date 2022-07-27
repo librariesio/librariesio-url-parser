@@ -6,17 +6,14 @@ describe ApacheGitboxUrlParser do
     it 'parses apache svn urls' do
       [
         %w[https://gitbox.apache.org/repos/asf?p=camel-quarkus.git;a=summary camel-quarkus],
-        %w[https://gitbox.apache.org/repos/asf/metamodel.git metamodel]
+        %w[https://gitbox.apache.org/repos/asf/metamodel.git metamodel],
+        %w[https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-testing-resourceresolver-mock.git sling-org-apache-sling-testing-resourceresolver-mock],
+        %w[https://gitbox.apache.org/repos/asf?p=lucene-solr.git;f=lucene lucene-solr]
       ].each do |row|
         url, full_name = row
         result = described_class.parse(url)
         expect(result).to eq(full_name)
       end
-    end
-
-    it "doesn't parse the Apache repos URL" do
-      url = "scm:svn:https://svn.apache.org/repos/asf/stanbol/tags/apache-stanbol-1.0.0/release-1.0.0-branch/stanbol.apache.org"
-      expect(described_class.parse(url)).to be_nil
     end
   end
 
