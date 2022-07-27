@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 class ApacheSvnUrlParser < URLParser
+  SUBDIR_NAMES = %w[trunk tags branches].freeze
   private
 
   def full_domain
@@ -40,8 +41,7 @@ class ApacheSvnUrlParser < URLParser
     #
     # for example apache.org/viewvnc/myproject/subproject/tags/my-1.0.0-release should stop at myproject/subproject
     # since the tags are just part of that repository
-    subdir_names = %w[trunk tags branches]
-    subdir_index = url.index{ |s| subdir_names.include?(s) }
+    subdir_index = url.index{ |s| SUBDIR_NAMES.include?(s) }
 
     # it looks like the maven/pom directory on the Apache SVN server has a bunch of repositories stored under tags
     # in this special case, grab the directory name under the subdirectory

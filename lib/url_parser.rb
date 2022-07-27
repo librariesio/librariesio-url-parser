@@ -36,7 +36,7 @@ class URLParser
 
   def parse_to_full_url
     path = parse
-    return nil if path.nil?
+    return nil if path.nil? || path.empty?
     [full_domain, path].join('/')
   end
 
