@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ApacheSvnUrlParser < URLParser
   SUBDIR_NAMES = %w[trunk tags branches].freeze
+  VALID_PATHS = %w[viewvc viewcvs\.cgi repos\/asf].freeze
   private
 
   def full_domain
@@ -15,14 +16,9 @@ class ApacheSvnUrlParser < URLParser
     'svn.apache'
   end
 
-  def valid_paths
-    # make sure that the special characters are escaped correctly for regex
-    %W[viewvc viewcvs\.cgi repos\/asf]
-  end
-
   def domain_regex
     # match only the viewvc endpoint at the domain
-    "#{domain}\.(#{tlds.join('|')})\/(#{valid_paths.join("|")})"
+    "#{domain}\.(#{tlds.join('|')})\/(#{VALID_PATHS.join("|")})"
   end
 
   def remove_domain
