@@ -3,7 +3,7 @@
 describe ApacheGitboxUrlParser do
 
   describe "#parse" do
-    it 'parses apache svn urls' do
+    it 'parses apache gitbox urls' do
       [
         %w[https://gitbox.apache.org/repos/asf?p=camel-quarkus.git;a=summary camel-quarkus],
         %w[https://gitbox.apache.org/repos/asf/metamodel.git metamodel],
@@ -18,7 +18,7 @@ describe ApacheGitboxUrlParser do
   end
 
   describe "#parse_to_full_url" do
-    it 'parses apache svn urls' do
+    it 'parses apache gitbox urls' do
       [
         %w[https://gitbox.apache.org/repos/asf?p=camel-quarkus.git;a=summary https://gitbox.apache.org/repos/asf/camel-quarkus],
         %w[https://gitbox.apache.org/repos/asf/metamodel.git https://gitbox.apache.org/repos/asf/metamodel]
