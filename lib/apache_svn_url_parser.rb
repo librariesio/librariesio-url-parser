@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ApacheSvnUrlParser < URLParser
   SUBDIR_NAMES = %w[trunk tags branches].freeze
+  VALID_PATHS = %w[viewvc viewcvs\.cgi repos\/asf].freeze
   private
 
   def full_domain
@@ -17,13 +18,13 @@ class ApacheSvnUrlParser < URLParser
 
   def domain_regex
     # match only the viewvc endpoint at the domain
-    "#{domain.split("/").first}\.(#{tlds.join('|')})\/viewvc"
+    "#{domain}\.(#{tlds.join('|')})\/(#{VALID_PATHS.join("|")})"
   end
 
   def remove_domain
     # find the matches for any github domain characters in the url string
     # and replace only the first match incase we find a repo with something like github.com as the name
-    url.sub!(/(apache\.org\/(viewvc|repos))+?(:|\/)?/i, '')
+    url.sub!(/(apache\.org\/(viewvc|repos\/asf|viewcvs\.cgi))+?(:|\/)?/i, '')
   end
 
   def extractable_early?
