@@ -17,7 +17,7 @@ class ApacheSvnUrlParser < URLParser
 
   def domain_regex
     # match only the viewvc endpoint at the domain
-    "#{domain.split("/").first}\.(#{tlds.join('|')})\/viewvc"
+    "#{domain}\.(#{tlds.join('|')})\/viewvc"
   end
 
   def remove_domain
