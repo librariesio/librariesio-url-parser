@@ -3,7 +3,7 @@
 describe ApacheGitWipUrlParser do
 
   describe "#parse" do
-    it 'parses apache svn urls' do
+    it 'parses apache git urls' do
       [
         %w[https://git-wip-us.apache.org/repos/asf?p=nifi.git nifi],
         %w[https://git-wip-us.apache.org/repos/asf?p=flume.git;a=tree;h=refs/heads/trunk;hb=trunk flume]
@@ -16,7 +16,7 @@ describe ApacheGitWipUrlParser do
   end
 
   describe "#parse_to_full_url" do
-    it 'parses apache svn urls' do
+    it 'parses apache git urls' do
       [
         %w[https://git-wip-us.apache.org/repos/asf?p=nifi.git https://git-wip-us.apache.org/repos/asf/nifi],
         %w[https://git-wip-us.apache.org/repos/asf?p=flume.git;a=tree;h=refs/heads/trunk;hb=trunk https://git-wip-us.apache.org/repos/asf/flume]
