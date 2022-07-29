@@ -32,8 +32,10 @@ class URLParser
     GitlabURLParser.parse_to_full_url(url) ||
     BitbucketURLParser.parse_to_full_url(url) ||
     ApacheSvnUrlParser.parse_to_full_url(url) ||
+    DrupalUrlParser.parse_to_full_url(url) ||
+    ApacheGitWipUrlParser.parse_to_full_url(url) ||
     ApacheGitboxUrlParser.parse_to_full_url(url) ||
-    DrupalUrlParser.parse_to_full_url(url)
+    EclipseGitUrlParser.parse_to_full_url(url)
   end
 
   def parse_to_full_url
