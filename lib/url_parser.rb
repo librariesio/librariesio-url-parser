@@ -35,7 +35,8 @@ class URLParser
     ApacheGitWipUrlParser.parse_to_full_url(url) ||
     ApacheGitboxUrlParser.parse_to_full_url(url) ||
     EclipseGitUrlParser.parse_to_full_url(url) ||
-    AndroidGooglesourceUrlParser.parse_to_full_url(url)
+    AndroidGooglesourceUrlParser.parse_to_full_url(url) ||
+    SourceforgeUrlParser.parse_to_full_url(url)
   end
 
   def parse_to_full_url
