@@ -35,11 +35,7 @@ class AndroidGooglesourceUrlParser < URLParser
     # and the same applies for tags
     # https://android.googlesource.com/device/amlogic/yukawa/+/refs/tags/android-12.1.0_r16
 
-    subdir_str = "+"
-    subdir_index = url.index{|part| part == subdir_str}
-    if subdir_index
-      self.url = url[0..subdir_index-1]
-    end
+    self.url = url.split('+', 1).first
 
     url.join("/")
   end
