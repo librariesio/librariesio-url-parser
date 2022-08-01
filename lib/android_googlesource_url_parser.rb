@@ -35,8 +35,6 @@ class AndroidGooglesourceUrlParser < URLParser
     # and the same applies for tags
     # https://android.googlesource.com/device/amlogic/yukawa/+/refs/tags/android-12.1.0_r16
 
-    self.url = url.split('+', 1).first
-
-    url.join("/")
+    self.url = url.join("/").split("+").first.chomp("/")
   end
 end
