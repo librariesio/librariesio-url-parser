@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class URLParser
   def self.parse(url)
     new(url).parse
@@ -28,28 +29,27 @@ class URLParser
   end
 
   def self.try_all(url)
-    GithubURLParser.parse_to_full_url(url) ||
-    GitlabURLParser.parse_to_full_url(url) ||
-    BitbucketURLParser.parse_to_full_url(url) ||
-    ApacheSvnUrlParser.parse_to_full_url(url) ||
-    DrupalUrlParser.parse_to_full_url(url) ||
-    ApacheGitWipUrlParser.parse_to_full_url(url) ||
-    ApacheGitboxUrlParser.parse_to_full_url(url) ||
-    EclipseGitUrlParser.parse_to_full_url(url) ||
-    AndroidGooglesourceUrlParser.parse_to_full_url(url) ||
-    SourceforgeUrlParser.parse_to_full_url(url)
+    # run through all the subclasses and try their parse method
+    # exit the reduce at the first non nil value and return that
+    descendants.reduce(nil) do |_, n|
+      r = n.parse_to_full_url(url)
+      break r if r
+    end
   end
 
   def parse_to_full_url
     path = parse
     return nil if path.nil? || path.empty?
+
     [full_domain, path].join('/')
   end
 
   def parse_to_full_user_url
     return nil unless parseable?
+
     path = clean_url
     return nil unless path.length == 1
+
     [full_domain, path].join('/')
   end
 
@@ -75,6 +75,7 @@ class URLParser
 
   def format_url
     return nil unless url.length == 2
+
     url.join('/')
   end
 
@@ -87,14 +88,6 @@ class URLParser
   end
 
   def domain
-    raise NotImplementedError
-  end
-
-  def includes_domain?
-    raise NotImplementedError
-  end
-
-  def extractable_early?
     raise NotImplementedError
   end
 
@@ -167,5 +160,15 @@ class URLParser
 
   def remove_whitespace
     url.gsub!(/\s/, '')
+  end
+
+  private_class_method def self.descendants
+    descendants = []
+    ObjectSpace.each_object(singleton_class) do |k|
+      next if k.singleton_class?
+
+      descendants.unshift k unless k == self
+    end
+    descendants
   end
 end
