@@ -162,13 +162,20 @@ class URLParser
     url.gsub!(/\s/, '')
   end
 
+  # This computation is memoized because it is expensive. This prevents use cases which require using
+  # .try_all in a tight loop. However, if this class is required directly (without requiring any subparsers),
+  # this method will memoize an empty array. It is recommended to simply require librariesio-url-parser.rb directly.
+  # This is the default behavior when installing this gem.
   private_class_method def self.descendants
-    descendants = []
-    ObjectSpace.each_object(singleton_class) do |k|
-      next if k.singleton_class?
+    @descendants ||=
+      begin
+        descendants = []
+        ObjectSpace.each_object(singleton_class) do |k|
+          next if k.singleton_class?
 
-      descendants.unshift k unless k == self
-    end
-    descendants
+          descendants.unshift k unless k == self
+        end
+        descendants
+      end
   end
 end
