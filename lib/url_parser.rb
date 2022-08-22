@@ -65,7 +65,12 @@ class URLParser
     remove_auth_user
     remove_equals_sign
     remove_scheme
-    return nil unless includes_domain?
+
+    unless includes_domain?
+      self.url = nil
+      return nil
+    end
+
     remove_subdomain
     remove_domain
     remove_git_extension
@@ -74,6 +79,7 @@ class URLParser
   end
 
   def format_url
+    return nil if url.nil?
     return nil unless url.length == 2
 
     url.join('/')
