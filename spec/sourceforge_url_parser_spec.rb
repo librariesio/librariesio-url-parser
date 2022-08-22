@@ -27,4 +27,8 @@ describe SourceforgeUrlParser do
       end
     end
   end
+
+  it 'does not parse sourceforge.jp urls' do
+    expect(described_class.parse_to_full_url("http://svn.sourceforge.jp/svnroot/foo/")).to be_nil
+  end
 end
