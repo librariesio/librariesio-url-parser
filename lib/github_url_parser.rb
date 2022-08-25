@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 class GithubURLParser < URLParser
-  def case_sensitive?
-    false
-  end
-
   private
 
   def full_domain

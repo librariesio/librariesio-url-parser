@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class AndroidGooglesourceUrlParser < URLParser
-  def case_sensitive?
-    true
-  end
+  CASE_SENSITIVE = true
 
   private
 

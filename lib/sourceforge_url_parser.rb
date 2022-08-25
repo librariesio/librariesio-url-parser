@@ -2,10 +2,6 @@
 class SourceforgeUrlParser < URLParser
   PROJECT_PATHS = %w[projects p].freeze
 
-  def case_sensitive?
-    false
-  end
-
   private
 
   def full_domain

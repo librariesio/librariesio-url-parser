@@ -13,5 +13,5 @@ require_relative "android_googlesource_url_parser"
 require_relative "sourceforge_url_parser"
 
 module LibrariesioURLParser
-  VERSION = "1.0.5"
+  VERSION = "1.0.6"
 end

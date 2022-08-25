@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 class GitlabURLParser < URLParser
-  def case_sensitive?
-    false
-  end
-
   private
 
   def full_domain

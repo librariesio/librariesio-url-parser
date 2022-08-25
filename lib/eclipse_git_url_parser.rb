@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 class EclipseGitUrlParser < URLParser
-  def case_sensitive?
-    true
-  end
+  CASE_SENSITIVE = true
 
   private
 

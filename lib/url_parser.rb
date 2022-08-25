@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class URLParser
+  CASE_SENSITIVE = false
+
   def self.parse(url)
     new(url).parse
   end
@@ -31,7 +33,7 @@ class URLParser
   def self.try_all(url)
     # run through all the subclasses and try their parse method
     # exit the reduce at the first non nil value and return that
-    descendants.reduce(nil) do |_, n|
+    all_parsers.reduce(nil) do |_, n|
       r = n.parse_to_full_url(url)
       break r if r
     end
@@ -53,8 +55,25 @@ class URLParser
     [full_domain, path].join('/')
   end
 
-  def case_sensitive?
-    false
+  def self.case_sensitive?
+    self::CASE_SENSITIVE
+  end
+
+  # This computation is memoized because it is expensive. This prevents use cases which require using
+  # .try_all in a tight loop. However, if this class is required directly (without requiring any subparsers),
+  # this method will memoize an empty array. It is recommended to simply require librariesio-url-parser.rb directly.
+  # This is the default behavior when installing this gem.
+  def self.all_parsers
+    @all_parsers ||=
+      begin
+        all_parsers = []
+        ObjectSpace.each_object(singleton_class) do |k|
+          next if k.singleton_class?
+
+          all_parsers.unshift k unless k == self
+        end
+        all_parsers
+      end
   end
 
   private
@@ -170,22 +189,5 @@ class URLParser
 
   def remove_whitespace
     url.gsub!(/\s/, '')
-  end
-
-  # This computation is memoized because it is expensive. This prevents use cases which require using
-  # .try_all in a tight loop. However, if this class is required directly (without requiring any subparsers),
-  # this method will memoize an empty array. It is recommended to simply require librariesio-url-parser.rb directly.
-  # This is the default behavior when installing this gem.
-  private_class_method def self.descendants
-    @descendants ||=
-      begin
-        descendants = []
-        ObjectSpace.each_object(singleton_class) do |k|
-          next if k.singleton_class?
-
-          descendants.unshift k unless k == self
-        end
-        descendants
-      end
   end
 end
