@@ -53,6 +53,10 @@ class URLParser
     [full_domain, path].join('/')
   end
 
+  def case_sensitive?
+    false
+  end
+
   private
 
   attr_accessor :url

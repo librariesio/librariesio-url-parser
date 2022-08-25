@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 class EclipseGitUrlParser < URLParser
+  def case_sensitive?
+    true
+  end
+
   private
 
   def full_domain

@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 class ApacheGitWipUrlParser < URLParser
+  def case_sensitive?
+    true
+  end
+
   private
 
   def full_domain

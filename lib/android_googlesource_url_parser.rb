@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 class AndroidGooglesourceUrlParser < URLParser
+  def case_sensitive?
+    true
+  end
+
   private
 
   def full_domain
