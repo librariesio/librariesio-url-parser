@@ -2,10 +2,7 @@
 class ApacheSvnUrlParser < URLParser
   SUBDIR_NAMES = %w[trunk tags branches].freeze
   VALID_PATHS = %w[viewvc viewcvs\.cgi repos\/asf].freeze
-
-  def self.case_sensitive?
-    true
-  end
+  CASE_SENSITIVE = true
 
   private
 
