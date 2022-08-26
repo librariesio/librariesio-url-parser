@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class SourceforgeUrlParser < URLParser
   PROJECT_PATHS = %w[projects p].freeze
+
   private
 
   def full_domain

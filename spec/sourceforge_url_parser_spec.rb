@@ -31,4 +31,10 @@ describe SourceforgeUrlParser do
   it 'does not parse sourceforge.jp urls' do
     expect(described_class.parse_to_full_url("http://svn.sourceforge.jp/svnroot/foo/")).to be_nil
   end
+
+  describe '#case_sensitive?' do
+    it "the parser is case insensitive" do
+      expect(described_class.case_sensitive?).to be(false)
+    end
+  end
 end

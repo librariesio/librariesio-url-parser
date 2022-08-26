@@ -2,6 +2,8 @@
 class ApacheSvnUrlParser < URLParser
   SUBDIR_NAMES = %w[trunk tags branches].freeze
   VALID_PATHS = %w[viewvc viewcvs\.cgi repos\/asf].freeze
+  CASE_SENSITIVE = true
+
   private
 
   def full_domain

@@ -32,4 +32,10 @@ describe ApacheSvnUrlParser do
       end
     end
   end
+
+  describe '#case_sensitive?' do
+    it "the parser is case sensitive" do
+      expect(described_class.case_sensitive?).to be(true)
+    end
+  end
 end

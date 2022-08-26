@@ -108,4 +108,10 @@ describe GithubURLParser do
       expect(result).to eq(nil)
     end
   end
+
+  describe '#case_sensitive?' do
+    it "the parser is case insensitive" do
+      expect(described_class.case_sensitive?).to be(false)
+    end
+  end
 end
