@@ -168,13 +168,7 @@ class URLParser
   end
 
   def remove_git_extension
-    operand = if url.is_a?(Array)
-                url
-              else
-                [url]
-              end
-
-    operand.last&.gsub!(/(\.git|\/)$/i, '')
+    Array(url).last&.gsub!(/(\.git|\/)$/i, '')
   end
 
   def remove_git_scheme
