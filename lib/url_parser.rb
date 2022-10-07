@@ -96,9 +96,9 @@ class URLParser
 
     remove_subdomain
     remove_domain
-    remove_git_extension
     remove_git_scheme
     remove_extra_segments
+    remove_git_extension
   end
 
   def format_url
@@ -168,7 +168,7 @@ class URLParser
   end
 
   def remove_git_extension
-    url.gsub!(/(\.git|\/)$/i, '')
+    Array(url).last&.gsub!(/(\.git|\/)$/i, '')
   end
 
   def remove_git_scheme
