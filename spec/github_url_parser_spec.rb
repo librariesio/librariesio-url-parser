@@ -60,7 +60,8 @@ describe GithubURLParser do
       ['scm:git:https://michaelkrog@github.com/michaelkrog/filter4j.git', 'michaelkrog/filter4j'],
       ['github.com/github/combobox-nav', 'github/combobox-nav'],
       ['github.com/hhao785/github.com', 'hhao785/github.com'],
-      ['github.com/contrived_example/githubcom', 'contrived_example/githubcom']
+      ['github.com/contrived_example/githubcom', 'contrived_example/githubcom'],
+      ['scm:git:ssh://github.com/an-organization/a-repository.git/a-repository-subdirectory', 'an-organization/a-repository']
     ].each do |row|
       url, full_name = row
       result = GithubURLParser.parse(url)
