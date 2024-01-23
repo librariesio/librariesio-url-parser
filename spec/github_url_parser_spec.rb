@@ -61,7 +61,8 @@ describe GithubURLParser do
       ['github.com/github/combobox-nav', 'github/combobox-nav'],
       ['github.com/hhao785/github.com', 'hhao785/github.com'],
       ['github.com/contrived_example/githubcom', 'contrived_example/githubcom'],
-      ['scm:git:ssh://github.com/an-organization/a-repository.git/a-repository-subdirectory', 'an-organization/a-repository']
+      ['scm:git:ssh://github.com/an-organization/a-repository.git/a-repository-subdirectory', 'an-organization/a-repository'],
+      ['https://github.com/"/maxcdn/shml/', 'maxcdn/shml']
     ].each do |row|
       url, full_name = row
       result = GithubURLParser.parse(url)
@@ -108,6 +109,19 @@ describe GithubURLParser do
       result = GithubURLParser.parse(url)
       expect(result).to eq(nil)
     end
+  end
+
+  it 'handles quotes' do
+    [
+      ['https://github.com/"/maxcdn/shml/', 'maxcdn/shml'],
+      ['https://github.com/"sunilrumbalama/docxtopdf"', 'sunilrumbalama/docxtopdf'],
+      ['https://github.com/"insertkoinio/koin.git"', 'insertkoinio/koin'],
+      ["https://github.com/'insertkoinio/koin.git", "insertkoinio/koin"]
+    ].each do |row|
+        url, full_name = row
+        result = GithubURLParser.parse(url)
+        expect(result).to eq(full_name)
+      end
   end
 
   describe '#case_sensitive?' do

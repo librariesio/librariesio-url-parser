@@ -82,6 +82,7 @@ class URLParser
 
   def clean_url
     remove_whitespace
+    remove_quotes
     remove_brackets
     remove_anchors
     remove_querystring
@@ -189,5 +190,9 @@ class URLParser
 
   def remove_whitespace
     url.gsub!(/\s/, '')
+  end
+
+  def remove_quotes
+    url.gsub!(/["']/, '')
   end
 end
