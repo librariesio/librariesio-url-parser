@@ -144,5 +144,16 @@ describe GithubURLParser do
         expect(result).to eq(full_name)
       end
     end
+
+    it "handles incorrect URLs" do
+      [
+        ['https://github.com/some/extra/paths', nil],
+        ['https://github.com/', nil],
+      ].each do |row|
+        url, full_name = row
+        result = described_class.parse_to_full_user_url(url)
+        expect(result).to eq(full_name)
+      end
+    end
   end
 end
