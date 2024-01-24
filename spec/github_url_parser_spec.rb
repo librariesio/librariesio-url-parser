@@ -129,4 +129,31 @@ describe GithubURLParser do
       expect(described_class.case_sensitive?).to be(false)
     end
   end
+
+  describe "#parse_to_full_user_url" do
+    it "parses User URLs" do
+      [
+        ['https://github.com/myuser', 'https://github.com/myuser'],
+        ['https://github.com/"/myuser', 'https://github.com/myuser'],
+        ['https://github.com/myuser#anchor', 'https://github.com/myuser'],
+        ['https://github.com/myuser?foo=bar&wut=wah', 'https://github.com/myuser'],
+        ["(https://github.com/myuser)", "https://github.com/myuser"]
+      ].each do |row|
+        url, full_name = row
+        result = described_class.parse_to_full_user_url(url)
+        expect(result).to eq(full_name)
+      end
+    end
+
+    it "handles incorrect URLs" do
+      [
+        ['https://github.com/some/extra/paths', nil],
+        ['https://github.com/', nil],
+      ].each do |row|
+        url, full_name = row
+        result = described_class.parse_to_full_user_url(url)
+        expect(result).to eq(full_name)
+      end
+    end
+  end
 end

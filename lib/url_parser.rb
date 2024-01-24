@@ -11,13 +11,16 @@ class URLParser
     @url = url.to_s.dup
   end
 
+  # Clean the URL and format the path segments after the domain
+  #
+  # @return String Path segments after the domain joined by a "/"
   def parse
     return nil unless parseable?
 
     if url = extractable_early?
       url
     else
-      clean_url
+      clean_url!
       format_url
     end
   end
@@ -39,6 +42,10 @@ class URLParser
     end
   end
 
+  # Clean and parse the URL string returning all path segments following
+  # the domain.
+  #
+  # @return String Domain with URL path segments appended
   def parse_to_full_url
     path = parse
     return nil if path.nil? || path.empty?
@@ -46,13 +53,17 @@ class URLParser
     [full_domain, path].join('/')
   end
 
+  # Clean and parse the URL string returning the first path following the domain.
+  #
+  # @return [String, nil] Domain with the lone user path segment appended. If the path resolved
+  #  to more than one segment nil is returned since it is considered an invalid URL for a user.
   def parse_to_full_user_url
     return nil unless parseable?
 
-    path = clean_url
-    return nil unless path.length == 1
+    clean_url!
+    return nil unless url.length == 1
 
-    [full_domain, path].join('/')
+    [full_domain, url].join('/')
   end
 
   def self.case_sensitive?
@@ -80,7 +91,12 @@ class URLParser
 
   attr_accessor :url
 
-  def clean_url
+  # Clean up the string URL to find the non domain pieces of the URL and pass back
+  # to the specific parser class.
+  ##
+  # @return [Array<String>, nil] Array of URL path segments following the domain or nil if the
+  #   URL string does not contain the valid domain name.
+  def clean_url!
     remove_whitespace
     remove_quotes
     remove_brackets
@@ -100,8 +116,18 @@ class URLParser
     remove_git_scheme
     remove_extra_segments
     remove_git_extension
+
+    # url should have been transformed to an array during the various method calls
+    # The method is transforming the initialized url in place so any callers should
+    # reference url directly instead of expecting a return here.
+    url
   end
 
+  # Join URL path segments for owner and repository name together with a "/" character.
+  #
+  #
+  # @return [String, nil] URL path segments joined by "/" or nil if there are not separate owner and
+  #   repository name segments.
   def format_url
     return nil if url.nil?
     return nil unless url.length == 2

@@ -105,4 +105,20 @@ describe GitlabURLParser do
       expect(described_class.case_sensitive?).to be(false)
     end
   end
+
+  describe "#parse_to_full_user_url" do
+    it "parses User URLs" do
+      [
+        ['https://gitlab.com/myuser', 'https://gitlab.com/myuser'],
+        ['https://gitlab.com/"/myuser', 'https://gitlab.com/myuser'],
+        ['https://gitlab.com/myuser#anchor', 'https://gitlab.com/myuser'],
+        ['https://gitlab.com/myuser?foo=bar&wut=wah', 'https://gitlab.com/myuser'],
+        ["(https://gitlab.com/myuser)", "https://gitlab.com/myuser"]
+      ].each do |row|
+        url, full_name = row
+        result = described_class.parse_to_full_user_url(url)
+        expect(result).to eq(full_name)
+      end
+    end
+  end
 end
