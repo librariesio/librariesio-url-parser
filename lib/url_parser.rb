@@ -162,7 +162,7 @@ class URLParser
   def extractable_early?
     return false if website_url?
 
-    match = url.match(/([\w\.@\:\-_~]+)\.#{domain_regex}\/([\w\.@\:\-\_\~]+)/i)
+    match = url.match(/([\w\.\@\:\-\~]+)\.#{domain_regex}\/([\w\.\@\:\-\~]+)/i)
     if match && match.length == 4
       return "#{match[1]}/#{match[3]}"
     end
