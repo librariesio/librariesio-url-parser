@@ -175,7 +175,7 @@ class URLParser
   end
 
   def remove_auth_user
-    self.url = url.split('@')[-1]
+    self.url = last_field(url, '@')
   end
 
   def remove_domain
@@ -187,7 +187,7 @@ class URLParser
   end
 
   def remove_equals_sign
-    self.url = url.split('=')[-1]
+    self.url = last_field(url, '=')
   end
 
   def remove_extra_segments
@@ -220,5 +220,16 @@ class URLParser
 
   def remove_quotes
     url.gsub!(/["']/, '')
+  end
+
+  def last_field(s, pattern)
+    # "".split(pattern) = [], not [""], but we want to return ""
+    # https://chriszetter.com/blog/2017/10/29/splitting-strings/
+    fields = s.split(pattern)
+    if fields.empty?
+      +""
+    else
+      fields[-1]
+    end
   end
 end
