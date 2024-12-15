@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    librariesio-url-parser (1.0.10)
+    librariesio-url-parser (1.0.11)
 
 GEM
   remote: https://rubygems.org/
